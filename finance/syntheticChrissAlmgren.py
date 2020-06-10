@@ -286,4 +286,3 @@ class MarketEnvironment():
         # Stop transacting
         self.transacting = False            
             
-           

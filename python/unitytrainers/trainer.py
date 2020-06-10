@@ -144,7 +144,7 @@ class Trainer(object):
             else:
                 logger.info(" {}: Step: {}. No episode was completed since last summary."
                             .format(self.brain_name, self.get_step))
-            summary = tf.Summary()
+            summary = tf.compat.v1.Summary()
             for key in self.stats:
                 if len(self.stats[key]) > 0:
                     stat_mean = float(np.mean(self.stats[key]))
@@ -162,7 +162,7 @@ class Trainer(object):
         :param input_dict: A dictionary that will be displayed in a table on Tensorboard.
         """
         try:
-            s_op = tf.summary.text(key, tf.convert_to_tensor(([[str(x), str(input_dict[x])] for x in input_dict])))
+            s_op = tf.compat.v1.summary.text(key, tf.convert_to_tensor(value=([[str(x), str(input_dict[x])] for x in input_dict])))
             s = self.sess.run(s_op)
             self.summary_writer.add_summary(s, self.get_step)
         except:

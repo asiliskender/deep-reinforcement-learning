@@ -57,8 +57,8 @@ class PPOTrainer(Trainer):
                                             .format(brain_name, self.m_size))
 
         self.variable_scope = trainer_parameters['graph_scope']
-        with tf.variable_scope(self.variable_scope):
-            tf.set_random_seed(seed)
+        with tf.compat.v1.variable_scope(self.variable_scope):
+            tf.compat.v1.set_random_seed(seed)
             self.model = PPOModel(env.brains[brain_name],
                                   lr=float(trainer_parameters['learning_rate']),
                                   h_size=int(trainer_parameters['hidden_units']),
@@ -93,7 +93,7 @@ class PPOTrainer(Trainer):
         if not os.path.exists(self.summary_path):
             os.makedirs(self.summary_path)
 
-        self.summary_writer = tf.summary.FileWriter(self.summary_path)
+        self.summary_writer = tf.compat.v1.summary.FileWriter(self.summary_path)
 
         self.inference_run_list = [self.model.output, self.model.all_probs, self.model.value,
                                    self.model.entropy, self.model.learning_rate]

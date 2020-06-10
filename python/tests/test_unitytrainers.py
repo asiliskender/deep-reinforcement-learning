@@ -148,8 +148,8 @@ def test_initialize_trainers(mock_communicator, mock_launcher):
             # Test for PPO trainer
             mock_load.return_value = dummy_config
             config = tc._load_config()
-            tf.reset_default_graph()
-            with tf.Session() as sess:
+            tf.compat.v1.reset_default_graph()
+            with tf.compat.v1.Session() as sess:
                 tc._initialize_trainers(config, sess)
                 assert(len(tc.trainers) == 1)
                 assert(isinstance(tc.trainers['RealFakeBrain'], PPOTrainer))
@@ -157,16 +157,16 @@ def test_initialize_trainers(mock_communicator, mock_launcher):
             # Test for Behavior Cloning Trainer
             mock_load.return_value = dummy_bc_config
             config = tc._load_config()
-            tf.reset_default_graph()
-            with tf.Session() as sess:
+            tf.compat.v1.reset_default_graph()
+            with tf.compat.v1.Session() as sess:
                 tc._initialize_trainers(config, sess)
                 assert(isinstance(tc.trainers['RealFakeBrain'], BehavioralCloningTrainer))
 
             # Test for proper exception when trainer name is incorrect
             mock_load.return_value = dummy_bad_config
             config = tc._load_config()
-            tf.reset_default_graph()
-            with tf.Session() as sess:
+            tf.compat.v1.reset_default_graph()
+            with tf.compat.v1.Session() as sess:
                 with pytest.raises(UnityEnvironmentException):
                     tc._initialize_trainers(config, sess)
 

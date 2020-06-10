@@ -13,15 +13,15 @@ from .mock_communicator import MockCommunicator
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_cc_vector(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=False, visual_inputs=0)
             env = UnityEnvironment(' ')
 
             model = PPOModel(env.brains["RealFakeBrain"])
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.probs, model.value, model.entropy,
@@ -37,15 +37,15 @@ def test_ppo_model_cc_vector(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_cc_visual(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=False, visual_inputs=2)
             env = UnityEnvironment(' ')
 
             model = PPOModel(env.brains["RealFakeBrain"])
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.probs, model.value, model.entropy,
@@ -63,14 +63,14 @@ def test_ppo_model_cc_visual(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_dc_visual(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=True, visual_inputs=2)
             env = UnityEnvironment(' ')
             model = PPOModel(env.brains["RealFakeBrain"])
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -89,14 +89,14 @@ def test_ppo_model_dc_visual(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_dc_vector(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=True, visual_inputs=0)
             env = UnityEnvironment(' ')
             model = PPOModel(env.brains["RealFakeBrain"])
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -112,15 +112,15 @@ def test_ppo_model_dc_vector(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_dc_vector_rnn(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=True, visual_inputs=0)
             env = UnityEnvironment(' ')
             memory_size = 128
             model = PPOModel(env.brains["RealFakeBrain"], use_recurrent=True, m_size=memory_size)
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -138,15 +138,15 @@ def test_ppo_model_dc_vector_rnn(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_cc_vector_rnn(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=False, visual_inputs=0)
             env = UnityEnvironment(' ')
             memory_size = 128
             model = PPOModel(env.brains["RealFakeBrain"], use_recurrent=True, m_size=memory_size)
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -163,14 +163,14 @@ def test_ppo_model_cc_vector_rnn(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_dc_vector_curio(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=True, visual_inputs=0)
             env = UnityEnvironment(' ')
             model = PPOModel(env.brains["RealFakeBrain"], use_curiosity=True)
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -189,14 +189,14 @@ def test_ppo_model_dc_vector_curio(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_cc_vector_curio(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=False, visual_inputs=0)
             env = UnityEnvironment(' ')
             model = PPOModel(env.brains["RealFakeBrain"], use_curiosity=True)
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -215,14 +215,14 @@ def test_ppo_model_cc_vector_curio(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_dc_visual_curio(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=True, visual_inputs=2)
             env = UnityEnvironment(' ')
             model = PPOModel(env.brains["RealFakeBrain"], use_curiosity=True)
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,
@@ -246,14 +246,14 @@ def test_ppo_model_dc_visual_curio(mock_communicator, mock_launcher):
 @mock.patch('unityagents.UnityEnvironment.executable_launcher')
 @mock.patch('unityagents.UnityEnvironment.get_communicator')
 def test_ppo_model_cc_visual_curio(mock_communicator, mock_launcher):
-    tf.reset_default_graph()
-    with tf.Session() as sess:
-        with tf.variable_scope("FakeGraphScope"):
+    tf.compat.v1.reset_default_graph()
+    with tf.compat.v1.Session() as sess:
+        with tf.compat.v1.variable_scope("FakeGraphScope"):
             mock_communicator.return_value = MockCommunicator(
                 discrete_action=False, visual_inputs=2)
             env = UnityEnvironment(' ')
             model = PPOModel(env.brains["RealFakeBrain"], use_curiosity=True)
-            init = tf.global_variables_initializer()
+            init = tf.compat.v1.global_variables_initializer()
             sess.run(init)
 
             run_list = [model.output, model.all_probs, model.value, model.entropy,

@@ -77,7 +77,7 @@ class TrainerController(object):
             seed = np.random.randint(0, 999999)
         self.seed = seed
         np.random.seed(self.seed)
-        tf.set_random_seed(self.seed)
+        tf.compat.v1.set_random_seed(self.seed)
         self.env = UnityEnvironment(file_name=env_path, worker_id=self.worker_id,
                                     curriculum=self.curriculum_file, seed=self.seed,
                                     docker_training=self.docker_training,
@@ -136,7 +136,7 @@ class TrainerController(object):
         """
         last_checkpoint = self.model_path + '/model-' + str(steps) + '.cptk'
         saver.save(sess, last_checkpoint)
-        tf.train.write_graph(sess.graph_def, self.model_path, 'raw_graph_def.pb', as_text=False)
+        tf.io.write_graph(sess.graph_def, self.model_path, 'raw_graph_def.pb', as_text=False)
         self.logger.info("Saved Model")
 
     def _export_graph(self):
@@ -216,14 +216,14 @@ class TrainerController(object):
         trainer_config = self._load_config()
         self._create_model_path(self.model_path)
 
-        tf.reset_default_graph()
+        tf.compat.v1.reset_default_graph()
 
-        with tf.Session() as sess:
+        with tf.compat.v1.Session() as sess:
             self._initialize_trainers(trainer_config, sess)
             for k, t in self.trainers.items():
                 self.logger.info(t)
-            init = tf.global_variables_initializer()
-            saver = tf.train.Saver(max_to_keep=self.keep_checkpoints)
+            init = tf.compat.v1.global_variables_initializer()
+            saver = tf.compat.v1.train.Saver(max_to_keep=self.keep_checkpoints)
             # Instantiate model parameters
             if self.load_model:
                 self.logger.info('Loading Model...')

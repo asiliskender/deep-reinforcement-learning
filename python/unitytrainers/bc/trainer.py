@@ -63,9 +63,9 @@ class BehavioralCloningTrainer(Trainer):
         if not os.path.exists(self.summary_path):
             os.makedirs(self.summary_path)
 
-        self.summary_writer = tf.summary.FileWriter(self.summary_path)
-        with tf.variable_scope(self.variable_scope):
-            tf.set_random_seed(seed)
+        self.summary_writer = tf.compat.v1.summary.FileWriter(self.summary_path)
+        with tf.compat.v1.variable_scope(self.variable_scope):
+            tf.compat.v1.set_random_seed(seed)
             self.model = BehavioralCloningModel(
                 h_size=int(trainer_parameters['hidden_units']),
                 lr=float(trainer_parameters['learning_rate']),
